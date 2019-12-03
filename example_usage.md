@@ -8,7 +8,7 @@ Specifically, all of the following actions are called from a command line enviro
 straight forward translating these actions to their corresponding rpc calls.
 
 If a more basic understanding is needed first, visit https://developers.eos.io/. Additionally, there
-will be future tutorials aimed at beginning EOS developers.
+will be future tutorials aimed at beginning LNX developers.
 
 Contract requires ~862kb of RAM
 
@@ -230,9 +230,9 @@ call:
 ```
 cleos push action dgood.token listsalenft '{"seller": "someaccount",
                                             "dgood_ids": [0],
-                                            "net_sale_amount": "1.0000 EOS"}' -p someaccount
+                                            "net_sale_amount": "1.00000000 LNX"}' -p someaccount
 ```
-We have litsted the ticket with dgood_id == 0 for 1.0000 EOS. Now anyone can query the contract and
+We have litsted the ticket with dgood_id == 0 for 1.00000000 LNX. Now anyone can query the contract and
 see that this is listed for sale.
 
 `cleos get table dgood.token dgood.token asks`
@@ -245,7 +245,7 @@ see that this is listed for sale.
         0
       ],
       "seller": "atestertest1",
-      "amount": "1.0000 EOS",
+      "amount": "1.00000000 LNX",
       "expiration": "2019-08-12T18:53:49"
     }
   ],
@@ -264,7 +264,7 @@ cleos push action dgood.token closesalenft '{"seller": "someaccount",
 ```
 cleos push action dgood.token listsalenft '{"seller": "someaccount",
                                             "dgood_ids": [0, 1],
-                                            "net_sale_amount": "1.0000 EOS"}' -p someaccount
+                                            "net_sale_amount": "1.00000000 LNX"}' -p someaccount
 ``` 
 
 Now querying the asks table shows that both dgoods are listed in one batch.
@@ -278,7 +278,7 @@ Now querying the asks table shows that both dgoods are listed in one batch.
         1
       ],
       "seller": "atestertest1",
-      "amount": "2.0000 EOS",
+      "amount": "2.00000000 LNX",
       "expiration": "2019-08-12T19:00:49"
     }
   ],
@@ -293,13 +293,13 @@ indexing all of the data in the asks table.
 
 #### purchasing a listing
 
-Finally to make a purchase, a user sends EOS to the dgoods contract with a memo in the form of
+Finally to make a purchase, a user sends LNX to the dgoods contract with a memo in the form of
 "batch_id,to_acount". That is, you may buy on behalf of others as long as you specify which account
 you want the dgood to be transfered to -- of course in most cases the `to_account` will be your
 account.
 
-Using a shorthand for EOS transfers built into cleos:
+Using a shorthand for LNX transfers built into cleos:
 
 ```
-cleos transfer buyeracct dgood.token "2.0000 EOS" "0,buyeracct" -p buyeracct
+cleos transfer buyeracct dgood.token "2.00000000 LNX" "0,buyeracct" -p buyeracct
 ```
