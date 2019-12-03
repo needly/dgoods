@@ -267,8 +267,8 @@ ACTION dgoods::listsalenft(const name& seller,
     require_auth( seller );
 
     check (dgood_ids.size() <= 20, "max batch size of 20");
-    check( net_sale_amount.amount > .02 * pow(10, net_sale_amount.symbol.precision()), "minimum price of at least 0.02 EOS");
-    check( net_sale_amount.symbol == symbol( symbol_code("EOS"), 4), "only accept EOS for sale" );
+    check( net_sale_amount.amount > .000002 * pow(10, net_sale_amount.symbol.precision()), "minimum price of at least 0.000002 LNX");
+    check( net_sale_amount.symbol == symbol( symbol_code("LNX"), 8), "only accept LNX for sale" );
 
     dgood_index dgood_table( get_self(), get_self().value );
     for ( auto const& dgood_id: dgood_ids ) {
@@ -325,12 +325,11 @@ void dgoods::buynft(const name& from,
                     const name& to,
                     const asset& quantity,
                     const string& memo) {
-    // allow EOS to be sent by sending with empty string memo
+    // allow LNX to be sent by sending with empty string memo
     if ( memo == "deposit" ) return;
     // don't allow spoofs
     if ( to != get_self() ) return;
-    if ( from == name("eosio.stake") ) return;
-    check( quantity.symbol == symbol( symbol_code("EOS"), 4), "Buy only with EOS" );
+    check( quantity.symbol == symbol( symbol_code("LNX"), 8), "Buy only with LNX" );
     check( memo.length() <= 32, "memo too long" );
 
     //memo format comma separated
@@ -353,9 +352,9 @@ void dgoods::buynft(const name& from,
         auto account = fee.first;
         auto amount = fee.second;
 
-        // if seller is contract, no need to send EOS again
+        // if seller is contract, no need to send LNX again
         if ( account != get_self() ) {
-            // send EOS to account owed
+            // send LNX to account owed
             action( permission_level{ get_self(), name("active") },
                     name("eosio.token"), name("transfer"),
                     make_tuple( get_self(), account, amount, string("sale of dgood") ) ).send();
